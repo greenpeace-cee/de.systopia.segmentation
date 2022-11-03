@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SegmentationOrder.GetSegments API
+ * SegmentationOrder.get_segments API
  */
 function civicrm_api3_segmentation_order_get_segments($params) {
   $sqlSelect = '
@@ -37,7 +37,7 @@ function civicrm_api3_segmentation_order_get_segments($params) {
 /**
  * API specification
  * This is used for documentation and validation.
- * For SegmentationOrder.GetSegments
+ * For SegmentationOrder.get_segments
  */
 function _civicrm_api3_segmentation_order_get_segments_spec(&$params) {
   $params['campaign_id'] = [
