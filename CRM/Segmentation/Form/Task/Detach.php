@@ -80,6 +80,11 @@ class CRM_Segmentation_Form_Task_Detach extends CRM_Contact_Form_Task {
         1 => count($this->_contactIds),
         2 => $campaign['title']);
       CRM_Core_Session::setStatus(ts("Detached %1 contacts from campaign '%2'", $variables), ts("Success"), "info");
+
+      // huck to fill civicrm_segmentation_order table with fresh data
+      if (!empty($values['campaign_id'])) {
+        CRM_Segmentation_Logic::setSegmentOrder($values['campaign_id'], CRM_Segmentation_Logic::getSegmentOrder($values['campaign_id']));
+      }
     }
   }
 }
