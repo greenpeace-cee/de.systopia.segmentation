@@ -89,6 +89,11 @@ class CRM_Segmentation_Form_Task_AssignMembership extends CRM_Member_Form_Task {
 
       // add segement to order
       CRM_Segmentation_Logic::addSegmentToCampaign($segment['id'], $values['campaign_id']);
+
+      // huck to fill civicrm_segmentation_order table with fresh data
+      if (!empty($values['campaign_id'])) {
+        CRM_Segmentation_Logic::setSegmentOrder($values['campaign_id'], CRM_Segmentation_Logic::getSegmentOrder($values['campaign_id']));
+      }
     }
   }
 }
