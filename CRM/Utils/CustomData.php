@@ -221,6 +221,10 @@ class CRM_Utils_CustomData {
     * translate all fields that are listed in the _translate list
     */
    protected function translateStrings(&$data) {
+      if (!isset($data['_translate'])) {
+        return;
+      }
+
       foreach ($data['_translate'] as $translate_key) {
          $value = $data[$translate_key];
          if (is_string($value)) {
