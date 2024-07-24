@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Segmentation</base>
+  <class>SegmentationExclude</class>
+  <name>civicrm_segmentation_exclude</name>
+  <log>true</log>
+
+  <field>
+    <name>id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Unique SegmentationExclude ID</comment>
+    <html>
+      <type>Number</type>
+    </html>
+  </field>
+  <primaryKey>
+    <name>id</name>
+    <autoincrement>true</autoincrement>
+  </primaryKey>
+
+  <field>
+    <name>campaign_id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>FK to Campaign</comment>
+    <html>
+      <type>Number</type>
+    </html>
+  </field>
+  <foreignKey>
+    <name>campaign_id</name>
+    <table>civicrm_campaign</table>
+    <key>id</key>
+  </foreignKey>
+
+  <field>
+    <name>segment_id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>FK to SegmentationIndex</comment>
+    <html>
+      <type>Number</type>
+    </html>
+  </field>
+  <foreignKey>
+    <name>segment_id</name>
+    <table>civicrm_segmentation_index</table>
+    <key>id</key>
+  </foreignKey>
+
+  <field>
+    <name>contact_id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>FK to Contact</comment>
+    <html>
+      <type>Number</type>
+    </html>
+  </field>
+  <foreignKey>
+    <name>contact_id</name>
+    <table>civicrm_contact</table>
+    <key>id</key>
+  </foreignKey>
+
+  <field>
+    <name>membership_id</name>
+    <type>int unsigned</type>
+    <required>false</required>
+    <comment>FK to Membership</comment>
+    <html>
+      <type>Number</type>
+    </html>
+  </field>
+  <foreignKey>
+    <name>membership_id</name>
+    <table>civicrm_membership</table>
+    <key>id</key>
+  </foreignKey>
+
+  <field>
+    <name>created_date</name>
+    <type>datetime</type>
+    <required>false</required>
+    <default>CURRENT_TIMESTAMP</default>
+    <comment>Date/Time the exclusion was created</comment>
+    <html>
+      <type>Select Date</type>
+    </html>
+  </field>
+
+</table>
