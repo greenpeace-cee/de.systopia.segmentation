@@ -78,6 +78,8 @@ class CRM_Segmentation_ExporterExcel extends CRM_Segmentation_Exporter {
     foreach ($data_array as $value) {
       // first: make sure there's no ';' in the value
       $value = str_replace(';', ',', $value);
+      // replace line breaks with spaces
+      $value = str_replace(["\r\n", "\r", "\n"], ' ', $value);
 
       // then: encode
       if (function_exists('iconv') && defined('ICONV_IMPL') && ICONV_IMPL != 'libiconv') {

@@ -20,14 +20,14 @@ class api_v3_Segmentation_GetTest extends \PHPUnit\Framework\TestCase implements
       ->apply();
   }
 
-  public function setUp() {
+  public function setUp(): void {
     $this->_segmentId = $this->callApiSuccess('Segmentation', 'getsegmentid', [
       'name' => 'Test Segment 1',
     ])['id'];
     parent::setUp();
   }
 
-  public function tearDown() {
+  public function tearDown(): void {
     parent::tearDown();
   }
 

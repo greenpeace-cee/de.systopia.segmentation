@@ -22,7 +22,7 @@ class CRM_Segmentation_LogicTest extends \PHPUnit\Framework\TestCase implements 
       ->apply();
   }
 
-  public function setUp() {
+  public function setUp(): void {
     $this->_campaignId = $this->callApiSuccess('Campaign', 'create', [
       'title' => 'Test Campaign',
       'status_id' => 1,
@@ -41,7 +41,7 @@ class CRM_Segmentation_LogicTest extends \PHPUnit\Framework\TestCase implements 
     parent::setUp();
   }
 
-  public function tearDown() {
+  public function tearDown(): void {
     parent::tearDown();
   }
 

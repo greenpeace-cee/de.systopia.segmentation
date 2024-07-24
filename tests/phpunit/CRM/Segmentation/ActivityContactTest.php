@@ -26,7 +26,7 @@ class CRM_Segmentation_ActivityContactTest extends \PHPUnit\Framework\TestCase i
       ->apply();
   }
 
-  public function setUp() {
+  public function setUp(): void {
     $this->_campaignId = $this->callApiSuccess('Campaign', 'create', [
       'title' => 'Test Campaign',
     ])['id'];
@@ -86,7 +86,7 @@ class CRM_Segmentation_ActivityContactTest extends \PHPUnit\Framework\TestCase i
     parent::setUp();
   }
 
-  public function tearDown() {
+  public function tearDown(): void {
     parent::tearDown();
   }
 

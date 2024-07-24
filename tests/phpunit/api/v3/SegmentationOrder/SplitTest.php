@@ -27,7 +27,7 @@ class api_v3_SegmentationOrder_SplitTest extends \PHPUnit\Framework\TestCase imp
       ->apply();
   }
 
-  public function setUp() {
+  public function setUp(): void {
     $this->_campaignId = $this->callApiSuccess('Campaign', 'create', [
       'title' => 'Test Campaign',
     ])['id'];
@@ -70,7 +70,7 @@ class api_v3_SegmentationOrder_SplitTest extends \PHPUnit\Framework\TestCase imp
     parent::setUp();
   }
 
-  public function tearDown() {
+  public function tearDown(): void {
     parent::tearDown();
   }
 
