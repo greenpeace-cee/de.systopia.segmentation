@@ -9,7 +9,8 @@
  * @throws CiviCRM_API3_Exception
  */
 function civicrm_api3_segmentation_order_custom_split($params) {
-  $segmentationOrder = CRM_Segmentation_SegmentationOrder::getSegmentationOrderData((int) $params['id']);
+  $segmentationOrder = CRM_Segmentation_BAO_SegmentationOrder::findById((int) $params['id']);
+
   if (empty($segmentationOrder)) {
     return civicrm_api3_create_error('SegmentationOrder(id=' . $params['id'] . ') does not exist.');
   }
@@ -43,7 +44,7 @@ function civicrm_api3_segmentation_order_custom_split($params) {
   $sumOfContacts = 0;
   $sumPercentOfContacts = 0;
   foreach ($params['new_segments_data'] as $segment) {
-    if (!CRM_Segmentation_SegmentationOrder::isSegmentNameAvailable($segmentationOrder->campaign_id, $segment['name'], $segmentationOrder->segment_id)) {
+    if (!CRM_Segmentation_BAO_SegmentationOrder::isSegmentNameAvailable($segmentationOrder->campaign_id, $segment['name'], $segmentationOrder->segment_id)) {
       return civicrm_api3_create_error("Segment with name {$segment['name']} already exists in this campaign.");
     }
     if ($params['mode'] == 'number') {
@@ -70,7 +71,8 @@ function civicrm_api3_segmentation_order_custom_split($params) {
   CRM_Segmentation_Logic::verifySegmentOrder($segmentationOrder->campaign_id);
   $segmentCount = count($params['new_segments_data']);
   CRM_Segmentation_Logic::moveSegmentOrderNumber($segmentCount, $segmentationOrder->campaign_id, $segmentationOrder->order_number);
-  CRM_Segmentation_SegmentationOrder::delete($params['id']);
+
+  $segmentationOrder->delete();
 
   if ($params['mode'] == 'percent') {
     $params['new_segments_data'] = CRM_Segmentation_Logic::convertPercentToCountOfContact($params['new_segments_data'], $segmentCountOfContact);
