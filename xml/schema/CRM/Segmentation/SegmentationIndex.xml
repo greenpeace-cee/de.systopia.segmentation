@@ -4,6 +4,7 @@
   <base>CRM/Segmentation</base>
   <class>SegmentationIndex</class>
   <name>civicrm_segmentation_index</name>
+  <labelField>name</labelField>
   <log>true</log>
 
   <field>
