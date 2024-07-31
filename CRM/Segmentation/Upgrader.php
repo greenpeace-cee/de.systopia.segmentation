@@ -17,7 +17,19 @@ class CRM_Segmentation_Upgrader extends CRM_Extension_Upgrader_Base {
 
   public function upgrade_0910() {
     $this->ctx->log->info('Updating segmentation schema to 0.9.1');
-    $this->executeSqlFile('sql/add_bundle_and_text_block.sql');
+
+    $bundle_col_exists = (bool) CRM_Core_DAO::singleValueQuery("SHOW COLUMNS FROM civicrm_segmentation_order WHERE Field = 'bundle'");
+
+    if (!$bundle_col_exists) {
+      CRM_Core_DAO::executeQuery("ALTER TABLE `civicrm_segmentation_order` ADD `bundle` varchar(255) NULL");
+    }
+
+    $text_block_col_exists = (bool) CRM_Core_DAO::singleValueQuery("SHOW COLUMNS FROM civicrm_segmentation_order WHERE Field = 'text_block'");
+
+    if (!$text_block_col_exists) {
+      CRM_Core_DAO::executeQuery("ALTER TABLE `civicrm_segmentation_order` ADD `text_block` varchar(255) NULL");
+    }
+
     $logging = new CRM_Logging_Schema();
     $logging->fixSchemaDifferences();
     return TRUE;
