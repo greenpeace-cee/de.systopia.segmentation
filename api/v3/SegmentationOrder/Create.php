@@ -53,12 +53,8 @@ function _civicrm_api3_segmentation_order_create_spec(&$spec) {
  * @throws API_Exception
  */
 function civicrm_api3_segmentation_order_create($params) {
-  if (empty($params['id'])) {
-    $data = CRM_Segmentation_SegmentationOrder::createSegmentationOrder($params);
-  }
-  else {
-    $data = CRM_Segmentation_SegmentationOrder::updateSegmentationOrder($params['id'], $params);
-  }
+  $data = CRM_Segmentation_BAO_SegmentationOrder::createOrUpdate($params)->fieldValues();
+
   return civicrm_api3_create_success(
     [$data],
     $params,

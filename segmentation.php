@@ -178,24 +178,6 @@ function segmentation_civicrm_install() {
 }
 
 /**
- * Implements hook_civicrm_postInstall().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_postInstall
- */
-function segmentation_civicrm_postInstall() {
-  _segmentation_civix_civicrm_postInstall();
-}
-
-/**
- * Implements hook_civicrm_uninstall().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
- */
-function segmentation_civicrm_uninstall() {
-  _segmentation_civix_civicrm_uninstall();
-}
-
-/**
  * Implements hook_civicrm_enable().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_enable
@@ -219,24 +201,6 @@ function segmentation_civicrm_enable() {
   $customData->syncOptionGroup(__DIR__ . '/resources/segments_option_group.json');
   $customData->syncOptionGroup(__DIR__ . '/resources/activity_type_option_group.json');
   $customData->syncCustomGroup(__DIR__ . '/resources/segmentation_custom_group.json');
-}
-
-/**
- * Implements hook_civicrm_disable().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
- */
-function segmentation_civicrm_disable() {
-  _segmentation_civix_civicrm_disable();
-}
-
-/**
- * Implements hook_civicrm_upgrade().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
- */
-function segmentation_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
-  return _segmentation_civix_civicrm_upgrade($op, $queue);
 }
 
 function segmentation_civicrm_pre($op, $objectName, $id, &$params) {
@@ -299,12 +263,3 @@ function segmentation_civicrm_navigationMenu(&$menu) {
   ));
   _segmentation_civix_navigationMenu($menu);
 } // */
-
-/**
- * Implements hook_civicrm_entityTypes().
- *
- * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_entityTypes
- */
-function segmentation_civicrm_entityTypes(&$entityTypes) {
-  _segmentation_civix_civicrm_entityTypes($entityTypes);
-}

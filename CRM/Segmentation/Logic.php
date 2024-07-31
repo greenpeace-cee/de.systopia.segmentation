@@ -243,12 +243,17 @@ class CRM_Segmentation_Logic {
           civicrm_segmentation.segment_id              AS segment_id,
           MIN(civicrm_segmentation_order.order_number) AS segment_order
         FROM civicrm_segmentation
-        LEFT JOIN civicrm_segmentation_order ON civicrm_segmentation_order.campaign_id = civicrm_segmentation.campaign_id
-                                            AND civicrm_segmentation_order.segment_id = civicrm_segmentation.segment_id
+        LEFT JOIN civicrm_segmentation_order
+          ON civicrm_segmentation_order.campaign_id = civicrm_segmentation.campaign_id
+          AND civicrm_segmentation_order.segment_id = civicrm_segmentation.segment_id
         WHERE civicrm_segmentation.campaign_id = {$campaign_id}
-        GROUP BY civicrm_segmentation.entity_id) tmp
-      LEFT JOIN civicrm_segmentation_order ON civicrm_segmentation_order.order_number = tmp.segment_order AND civicrm_segmentation_order.campaign_id = {$campaign_id}
-      GROUP BY tmp.segment_order");
+        GROUP BY civicrm_segmentation.entity_id, civicrm_segmentation.segment_id) tmp
+      LEFT JOIN civicrm_segmentation_order
+        ON civicrm_segmentation_order.order_number = tmp.segment_order
+        AND civicrm_segmentation_order.campaign_id = {$campaign_id}
+      GROUP BY tmp.segment_order, civicrm_segmentation_order.segment_id
+    ");
+
     while ($query->fetch()) {
       $segment_counts[$query->segment_id] = $query->contact_count;
     }

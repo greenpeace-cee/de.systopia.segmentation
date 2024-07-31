@@ -14,6 +14,8 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+use Civi\Api4;
+
 /**
  * Segment Split Form
  */
@@ -310,7 +312,7 @@ class CRM_Segmentation_Form_Split extends CRM_Core_Form {
           }
         }
 
-        if (!empty($fields['name_of_segment'][$key]) && !CRM_Segmentation_SegmentationOrder::isSegmentNameAvailable($campaignId, $fields['name_of_segment'][$key], $segmentId)) {
+        if (!empty($fields['name_of_segment'][$key]) && !CRM_Segmentation_BAO_SegmentationOrder::isSegmentNameAvailable($campaignId, $fields['name_of_segment'][$key], $segmentId)) {
           $errors["name_of_segment[". $key ."]"] = ts("This segment name already exists in this campaign.");
         }
 
@@ -419,7 +421,15 @@ class CRM_Segmentation_Form_Split extends CRM_Core_Form {
 
   public function postProcess() {
     $values = $this->exportValues();
-    $segmentOrderId = CRM_Segmentation_SegmentationOrder::getSegmentationOrderId($values['cid'], $values['sid']);
+
+    $segmentOrderId = Api4\SegmentationOrder::get(FALSE)
+      ->addSelect('id')
+      ->addWhere('campaign_id', '=', $values['cid'])
+      ->addWhere('segment_id', '=', $values['sid'])
+      ->setLimit(1)
+      ->execute()
+      ->first()['id'];
+
     $splitBuckets = [];
 
     if ($values['split_type'] == 'a_b_test') {
