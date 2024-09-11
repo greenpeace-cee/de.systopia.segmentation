@@ -47,7 +47,8 @@ function _civicrm_api3_segmentation_order_split_spec(&$spec) {
  * @throws CiviCRM_API3_Exception
  */
 function _civicrm_api3_segmentation_order_split_buckets($params) {
-  $segmentationOrder = CRM_Segmentation_SegmentationOrder::getSegmentationOrderData((int) $params['id']);
+  $segmentationOrder = CRM_Segmentation_BAO_SegmentationOrder::findById((int) $params['id']);
+
   if (empty($segmentationOrder)) {
     return civicrm_api3_create_error('SegmentationOrder(id=' . $params['id'] . ') does not exist.');
   }
@@ -65,7 +66,7 @@ function _civicrm_api3_segmentation_order_split_buckets($params) {
 
   // are the bucket names already in use as segment names in this campaign?
   foreach ($params['buckets'] as $bucket) {
-    if (!CRM_Segmentation_SegmentationOrder::isSegmentNameAvailable($campaign_id, $bucket, $segment_id)) {
+    if (!CRM_Segmentation_BAO_SegmentationOrder::isSegmentNameAvailable($campaign_id, $bucket, $segment_id)) {
       return civicrm_api3_create_error("Segment with name {$bucket} already exists in this campaign.");
     }
   }
@@ -85,7 +86,7 @@ function _civicrm_api3_segmentation_order_split_buckets($params) {
     $countPerBucket = 0;
   }
 
-  CRM_Segmentation_SegmentationOrder::delete($params['id']);
+  $segmentationOrder->delete();
 
   $buckets = [];
   $i = 0;
@@ -141,7 +142,8 @@ function _civicrm_api3_segmentation_order_split_buckets($params) {
  * @throws CiviCRM_API3_Exception
  */
 function _civicrm_api3_segmentation_order_split_test_buckets($params) {
-  $segmentationOrder = CRM_Segmentation_SegmentationOrder::getSegmentationOrderData((int) $params['id']);
+  $segmentationOrder = CRM_Segmentation_BAO_SegmentationOrder::findById((int) $params['id']);
+
   if (empty($segmentationOrder)) {
     return civicrm_api3_create_error('SegmentationOrder(id=' . $params['id'] . ') does not exist.');
   }
@@ -159,7 +161,7 @@ function _civicrm_api3_segmentation_order_split_test_buckets($params) {
 
   // are the bucket names already in use as segment names in this campaign?
   foreach ($params['buckets'] as $bucket) {
-    if (!CRM_Segmentation_SegmentationOrder::isSegmentNameAvailable($campaign_id, $bucket, $segment_id)) {
+    if (!CRM_Segmentation_BAO_SegmentationOrder::isSegmentNameAvailable($campaign_id, $bucket, $segment_id)) {
       return civicrm_api3_create_error("Segment with name {$bucket} already exists in this campaign.");
     }
   }
@@ -179,7 +181,7 @@ function _civicrm_api3_segmentation_order_split_test_buckets($params) {
     $countPerBucket = 0;
   }
 
-  CRM_Segmentation_SegmentationOrder::delete($params['id']);
+  $segmentationOrder->delete();
 
   $buckets = [];
   $i = 0;
@@ -234,7 +236,8 @@ function _civicrm_api3_segmentation_order_split_test_buckets($params) {
  * @return array
  */
 function _civicrm_api3_segmentation_order_split_exclude($params) {
-  $segmentationOrder = CRM_Segmentation_SegmentationOrder::getSegmentationOrderData((int) $params['id']);
+  $segmentationOrder = CRM_Segmentation_BAO_SegmentationOrder::findById((int) $params['id']);
+
   if (empty($segmentationOrder)) {
     return civicrm_api3_create_error('SegmentationOrder(id=' . $params['id'] . ') does not exist.');
   }
