@@ -235,23 +235,23 @@ class CRM_Segmentation_Logic {
 
     $query = CRM_Core_DAO::executeQuery("
       SELECT
-        civicrm_segmentation_order.segment_id AS segment_id,
-        COUNT(DISTINCT(tmp.contact_id))       AS contact_count
+        MIN(civicrm_segmentation_order.segment_id) AS segment_id,
+        COUNT(DISTINCT(tmp.contact_id))            AS contact_count
       FROM (
         SELECT
           civicrm_segmentation.entity_id               AS contact_id,
-          civicrm_segmentation.segment_id              AS segment_id,
+          MIN(civicrm_segmentation.segment_id)         AS segment_id,
           MIN(civicrm_segmentation_order.order_number) AS segment_order
         FROM civicrm_segmentation
         LEFT JOIN civicrm_segmentation_order
           ON civicrm_segmentation_order.campaign_id = civicrm_segmentation.campaign_id
           AND civicrm_segmentation_order.segment_id = civicrm_segmentation.segment_id
         WHERE civicrm_segmentation.campaign_id = {$campaign_id}
-        GROUP BY civicrm_segmentation.entity_id, civicrm_segmentation.segment_id) tmp
+        GROUP BY civicrm_segmentation.entity_id) tmp
       LEFT JOIN civicrm_segmentation_order
         ON civicrm_segmentation_order.order_number = tmp.segment_order
         AND civicrm_segmentation_order.campaign_id = {$campaign_id}
-      GROUP BY tmp.segment_order, civicrm_segmentation_order.segment_id
+      GROUP BY tmp.segment_order
     ");
 
     while ($query->fetch()) {
