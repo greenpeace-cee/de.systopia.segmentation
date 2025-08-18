@@ -53,6 +53,7 @@ class ActivityContactSpecProvider implements Generic\SpecProviderInterface {
       FROM civicrm_segmentation_index si
       INNER JOIN civicrm_activity_contact_segmentation acs
         ON acs.activity_contact_id = {$field['sql_name']}
+        AND si.id = acs.segment_id
     )";
   }
 
@@ -62,6 +63,7 @@ class ActivityContactSpecProvider implements Generic\SpecProviderInterface {
       FROM civicrm_segmentation_index si
       INNER JOIN civicrm_activity_contact_segmentation acs
         ON acs.activity_contact_id = {$field['sql_name']}
+        AND si.id = acs.segment_id
     )";
   }
 
